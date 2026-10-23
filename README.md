@@ -1,6 +1,6 @@
-# Nuni Uñas — landing de conversión para reservas por WhatsApp
+# Nuni Uñas — landing para captar y ordenar consultas por WhatsApp
 
-> Caso de estudio de una landing mobile-first para una emprendedora de manicura en Colón, Entre Ríos. El objetivo: transformar visitas en conversaciones de WhatsApp con contexto, ordenar el primer contacto y acompañar una meta de negocio de **+20% de clientas en 6 meses**.
+> Caso de estudio de una landing mobile-first para una emprendedora de manicura en Colón, Entre Ríos. El objetivo: transformar visitas en **consultas de WhatsApp con contexto**, ordenar el primer contacto y acompañar una meta de negocio de **+20% de clientas en 6 meses**.
 
 ![Vista previa de la landing de Nuni Uñas](docs/preview.jpg)
 
@@ -12,7 +12,7 @@
 
 Nuni Uñas es un emprendimiento de manicura semipermanente, ojo de gato y belleza de manos. Su presencia digital dependía de redes sociales y de conversaciones sueltas por WhatsApp.
 
-El problema no era “tener una web”. El problema era **convertir interés en turnos confirmados sin agregar complejidad a la agenda de Nuni**.
+El problema no era “tener una web”. El problema era **captar consultas con contexto y ordenar el primer contacto sin agregar complejidad a la agenda de Nuni**.
 
 Desafíos detectados:
 
@@ -29,13 +29,13 @@ La clienta planteó una meta concreta: **aumentar sus clientas en un 20% en 6 me
 Una landing estática, rápida y mobile-first que hace tres cosas:
 
 1. **Comunica** servicios, precios, estilo y garantía.
-2. **Guía** a la reserva con un formulario breve que arma un mensaje completo.
+2. **Ordena la consulta** con un formulario breve que arma un mensaje completo.
 3. **Deriva a WhatsApp** en una pestaña nueva, con el mensaje listo para enviar.
 
-No se reemplazó a la persona: se le quitó fricción al primer contacto. La confirmación final sigue siendo de Nuni.
+No se reemplazó a la persona: se le quitó fricción al primer contacto y se ordenó la información. La confirmación final sigue siendo de Nuni.
 
 ```text
-Visita → CTA “Reservar” → formulario → validación → mensaje estructurado → WhatsApp → confirmación humana
+Visita → CTA “Reservar” → formulario → validación → consulta estructurada → WhatsApp → confirmación humana
 ```
 
 ### Cómo se abordaron la agenda y los contactos
@@ -133,13 +133,13 @@ No hay frameworks, backend, base de datos, cookies propias ni proceso de build.
 
 ## 6. Calidad y resultados técnicos
 
-- **Auditoría propia:** 11 comprobaciones, 0 errores, 0 avisos.
+- **Auditoría propia:** 12 comprobaciones, 0 errores, 0 avisos.
 - **21 variantes de imagen** (7 fotos × AVIF/WebP/JPEG), aproximadamente **184 KB en AVIF**.
 - Foto de “Belleza de pies” actualizada a un **AVIF real de 1200 × 900**.
 - Formulario probado con datos inválidos y válidos; mensaje verificado con nombre compuesto y apóstrofe.
 - Modal y lightbox con focus trap, cierre con `Escape` y restauración de foco.
 - `node --check script.js` sin errores.
-- `npx --yes html-validate index.html` sin errores.
+- `npx --yes html-validate index.html terminos.html privacidad.html` sin errores.
 - **Lighthouse local:** Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**, sin fallos.
 - Workflow de GitHub Actions con permisos de solo lectura para auditar en cada push/PR.
 - Consola del navegador sin errores ni avisos en la última revisión.
@@ -161,7 +161,7 @@ Comandos reproducibles:
 python -m http.server 8000 --bind 0.0.0.0
 node --check script.js
 node agent/audit.mjs
-npx --yes html-validate index.html
+npx --yes html-validate index.html terminos.html privacidad.html
 ```
 
 ## 7. Estructura del repositorio
@@ -169,6 +169,8 @@ npx --yes html-validate index.html
 ```text
 .
 ├── index.html
+├── terminos.html
+├── privacidad.html
 ├── styles.css
 ├── script.js
 ├── fonts.css
@@ -220,7 +222,7 @@ Resumen:
 git init
 git branch -M main
 git add .
-git commit -m "feat: landing de conversión para Nuni Uñas"
+git commit -m "feat: landing para captar y ordenar consultas de Nuni Uñas"
 git remote add origin https://github.com/TU-USUARIO/nuni-unas-landing.git
 git push -u origin main
 ```
@@ -236,8 +238,9 @@ Después, en GitHub:
 
 ### Ahora
 
-- Landing publicada y estable.
-- Flujo de reserva por WhatsApp con mensaje estructurado.
+- Landing lista para publicar.
+- Flujo de captación y ordenamiento de consultas por WhatsApp.
+- Páginas de términos y privacidad enlazadas desde el footer y el formulario.
 - Imágenes optimizadas y auditoría reproducible.
 
 ### Próximo
@@ -268,15 +271,20 @@ Este repositorio busca mostrar criterio, no solo código:
 
 Si querés ver el razonamiento completo, abrí **[docs/caso-de-estudio.md](docs/caso-de-estudio.md)**.
 
-## 12. Derechos y créditos
+## 12. Legal y derechos
 
+- **[Términos y condiciones](terminos.html):** alcance del servicio, solicitud y confirmación de turnos, precios, garantía de 7 días, reprogramaciones, salud y responsabilidad.
+- **[Política de privacidad](privacidad.html):** datos que recibe el sitio, finalidad, conservación, WhatsApp/Meta, derechos y contacto.
+- El formulario **no envía datos a un servidor propio**: arma un mensaje y abre WhatsApp. El sitio no usa cookies propias, analítica ni píxeles publicitarios.
+- Responsable del tratamiento: **Nuni Uñas**, Colón, Entre Ríos, Argentina. Contacto: WhatsApp `+54 9 3447 412855`.
 - Marca, textos, fotografías y datos de contacto: **Nuni Uñas**.
 - Código y documentación: caso de estudio de portfolio. No se autoriza la reutilización comercial de la identidad visual ni de las fotos sin permiso.
 - Tipografías: **Fraunces** y **Manrope**, autohospedadas bajo SIL Open Font License.
 - Iconos: SVG inline propios del proyecto.
+- Los textos legales se redactaron para el funcionamiento actual de la landing. Si se agregan pagos, analítica, backend o un calendario real, deben revisarse y actualizarse antes de publicar esos cambios.
 
 ---
 
 ### English summary
 
-A mobile-first conversion landing for a nail studio in Colón, Argentina. It organizes service, date, time, contact and style preferences into a structured WhatsApp message, reducing booking friction while keeping human confirmation. Built with semantic HTML, vanilla CSS/JS, accessible dialogs, CSP, and optimized AVIF/WebP/JPEG images. The project documents the business goal (+20% clients in six months), the measurement plan, and the ethical use of persuasion principles.
+A mobile-first landing page for a nail studio in Colón, Argentina. It captures and organizes inquiries by turning service, date, time, contact and style preferences into a structured WhatsApp message, reducing friction while keeping human confirmation. Built with semantic HTML, vanilla CSS/JS, accessible dialogs, CSP, optimized AVIF/WebP/JPEG images, and dedicated terms and privacy pages. The project documents the business goal (+20% clients in six months), the measurement plan, and the ethical use of persuasion principles.

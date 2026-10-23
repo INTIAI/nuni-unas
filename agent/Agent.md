@@ -19,7 +19,9 @@ No hay proceso de compilación: se editan los archivos y se publican tal cual.
 ```text
 .
 ├── index.html                  # Estructura, metadatos, CSP, JSON-LD y contenido
-├── styles.css                  # Diseño, responsive, fondos y animaciones
+├── terminos.html               # Términos y condiciones del servicio
+├── privacidad.html             # Política de privacidad y derechos de datos
+├── styles.css                  # Diseño, responsive, fondos, legales y animaciones
 ├── script.js                   # Navegación, reveal, reserva, validación, WhatsApp y lightbox
 ├── fonts.css                   # @font-face autohospedado
 ├── README.md                   # Presentación del proyecto y caso de estudio
@@ -98,7 +100,7 @@ node --check script.js
 node agent/audit.mjs
 
 # Validación HTML
-npx --yes html-validate index.html
+npx --yes html-validate index.html terminos.html privacidad.html
 ```
 
 Al probar cambios que puedan estar cacheados, abrir con un parámetro de versión, por ejemplo
@@ -244,7 +246,17 @@ Checklist manual:
 - Revisar 360, 390, 768 y 1200 px de ancho.
 - Comprobar que no haya scroll horizontal.
 
-## 9. Rendimiento
+## 9. Legal y privacidad
+
+- `terminos.html`: alcance del servicio, solicitud y confirmación de turno, precios, garantía, reprogramaciones, salud, propiedad intelectual, responsabilidad y ley aplicable.
+- `privacidad.html`: responsable, datos recibidos, finalidad, base legal, conservación, WhatsApp/Meta, derechos, seguridad y menores.
+- El formulario no envía datos a un servidor propio: arma un mensaje y abre WhatsApp.
+- El sitio no usa cookies propias, analítica ni píxeles publicitarios.
+- Los enlaces legales están en el footer y en el formulario de reserva.
+- Si se agregan pagos, analítica, backend o calendario, actualizar ambos documentos antes de publicar.
+- Los textos legales son una base operativa para esta versión; conviene una revisión profesional antes de escalar el negocio.
+
+## 10. Rendimiento
 
 - Fuentes autohospedadas con `font-display: swap` y `preload` de los tres WOFF2.
 - Imágenes en AVIF/WebP con JPG de respaldo.
@@ -259,7 +271,7 @@ Checklist manual:
   - compresión Brotli/Gzip en el hosting;
   - CDN si la galería crece.
 
-## 10. Escalabilidad
+## 11. Escalabilidad
 
 ### Fase 1 — Mantener la landing estática
 
@@ -283,12 +295,12 @@ Checklist manual:
 - Analítica respetuosa de la privacidad y monitoreo de errores.
 - Si se migra a un framework, conservar metadatos SEO, JSON-LD, accesibilidad y la CSP.
 
-## 11. Checklist antes de publicar
+## 12. Checklist antes de publicar
 
 ```powershell
 node --check script.js
 node agent/audit.mjs
-npx --yes html-validate index.html
+npx --yes html-validate index.html terminos.html privacidad.html
 ```
 
 Además:
@@ -298,18 +310,22 @@ Además:
 - [ ] El formulario inválido bloquea el envío y muestra mensajes claros.
 - [ ] El formulario válido abre WhatsApp en pestaña nueva con el mensaje correcto.
 - [ ] El lightbox abre, cierra con `Escape` y devuelve el foco.
+- [ ] Los enlaces a términos y privacidad funcionan desde el footer y el formulario.
+- [ ] Las páginas legales se ven bien en móvil y escritorio.
 - [ ] No hay referencias a PNG originales en HTML/CSS.
 - [ ] No se agregaron secretos, PHP ni dependencias innecesarias.
 - [ ] Se probó en móvil y escritorio.
+- [ ] No se hace commit ni push sin autorización de la clienta.
 
-## 12. Estado de la última revisión
+## 13. Estado de la última revisión
 
 - Foto de “Belleza de pies” actualizada a la imagen nueva.
 - `ritual-pies.avif` generado como AVIF real, `1200 × 900`.
 - HTML actualizado a `width="1200" height="900"`.
 - `agent/audit.mjs` ampliado para validar firmas de AVIF/WebP/JPEG.
-- Auditoría: **11 comprobaciones, 0 errores, 0 avisos**.
-- `html-validate`: sin errores.
+- Auditoría: **12 comprobaciones, 0 errores, 0 avisos** (incluye enlaces legales).
+- `html-validate`: sin errores en `index.html`, `terminos.html` y `privacidad.html`.
 - `node --check script.js`: sin errores.
+- Lighthouse local: Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**.
 - Consola del navegador: sin errores ni avisos después de quitar el preload del hero.
 - Formulario inválido/válido y lightbox probados en navegador.

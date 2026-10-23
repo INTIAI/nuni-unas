@@ -7,6 +7,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 
 const html = read("index.html");
+const legalPages = ["terminos.html", "privacidad.html"];
+const legalDocs = legalPages.map((file) => ({ file, html: read(file) }));
+const htmlDocs = [html, ...legalDocs.map((doc) => doc.html)];
 const css = read("styles.css");
 const js = read("script.js");
 
@@ -48,21 +51,23 @@ const refExists = (ref) => {
 const collectHtmlRefs = () => {
   const refs = new Map();
 
-  for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
-    const ref = localPath(match[1]);
-    if (ref) refs.set(ref, "HTML");
-  }
-
-  for (const match of html.matchAll(/\bsrcset="([^"]+)"/g)) {
-    for (const candidate of match[1].split(",")) {
-      const ref = localPath(candidate.trim().split(/\s+/, 1)[0]);
-      if (ref) refs.set(ref, "HTML srcset");
+  for (const doc of htmlDocs) {
+    for (const match of doc.matchAll(/\b(?:src|href)="([^"]+)"/g)) {
+      const ref = localPath(match[1]);
+      if (ref) refs.set(ref, "HTML");
     }
-  }
 
-  for (const match of html.matchAll(/\bdata-lightbox="([^"]+)"/g)) {
-    const ref = localPath(match[1]);
-    if (ref) refs.set(ref, "lightbox");
+    for (const match of doc.matchAll(/\bsrcset="([^"]+)"/g)) {
+      for (const candidate of match[1].split(",")) {
+        const ref = localPath(candidate.trim().split(/\s+/, 1)[0]);
+        if (ref) refs.set(ref, "HTML srcset");
+      }
+    }
+
+    for (const match of doc.matchAll(/\bdata-lightbox="([^"]+)"/g)) {
+      const ref = localPath(match[1]);
+      if (ref) refs.set(ref, "lightbox");
+    }
   }
 
   return refs;
@@ -152,8 +157,10 @@ for (const tag of imgTags) {
 if (imgIssues.length) fail("Atributos de imágenes", imgIssues.join(" | "));
 else pass("Atributos de imágenes", "alt, dimensiones, lazy loading y decoding presentes");
 
-const externalLinks = (html.match(/<a\b[^>]*target="_blank"[^>]*>/g) || []).filter((tag) =>
-  /target="_blank"/.test(tag)
+const externalLinks = htmlDocs.flatMap((doc) =>
+  (doc.match(/<a\b[^>]*target="_blank"[^>]*>/g) || []).filter((tag) =>
+    /target="_blank"/.test(tag)
+  )
 );
 const badLinks = externalLinks.filter((tag) => {
   const rel = tag.match(/\brel="([^"]*)"/)?.[1] || "";
@@ -193,13 +200,39 @@ const missingMeta = requiredMeta.filter(([, pattern]) => !pattern.test(html)).ma
 if (missingMeta.length) fail("Metadatos", `faltan: ${missingMeta.join(", ")}`);
 else pass("Metadatos", "charset, viewport, description, referrer y theme-color");
 
-if (!/<html\s+lang="es-AR"/.test(html)) fail("Idioma", 'se esperaba lang="es-AR"');
-else pass("Idioma", "lang=es-AR");
+const badLangDocs = [html, ...legalDocs.map((doc) => doc.html)].filter(
+  (doc) => !/<html\s+lang="es-AR"/.test(doc)
+);
+if (badLangDocs.length) fail("Idioma", 'se esperaba lang="es-AR" en todas las páginas');
+else pass("Idioma", `${htmlDocs.length} páginas con lang=es-AR`);
 
-if (/\bsrc=""|\bhref="#"/.test(html)) {
+if (htmlDocs.some((doc) => /\bsrc=""|\bhref="#"/.test(doc))) {
   fail("Atributos vacíos", 'se encontró src="" o href="#"');
 } else {
-  pass("Atributos vacíos", "sin src/href vacíos");
+  pass("Atributos vacíos", "sin src/href vacíos en todas las páginas");
+}
+
+const legalIssues = [];
+for (const { file, html: doc } of legalDocs) {
+  if (!/<meta\s+http-equiv="Content-Security-Policy"/.test(doc)) {
+    legalIssues.push(`${file}: sin CSP`);
+  }
+  if (!/<meta\s+name="description"/.test(doc)) {
+    legalIssues.push(`${file}: sin description`);
+  }
+  if (!/<meta\s+name="referrer"/.test(doc)) {
+    legalIssues.push(`${file}: sin referrer`);
+  }
+}
+for (const file of legalPages) {
+  if (!html.includes(`href="${file}"`)) {
+    legalIssues.push(`${file}: no está enlazado desde index.html`);
+  }
+}
+if (legalIssues.length) {
+  fail("Legal y privacidad", legalIssues.join(" | "));
+} else {
+  pass("Legal y privacidad", "páginas enlazadas, con CSP y metadatos");
 }
 
 const originalFiles = [

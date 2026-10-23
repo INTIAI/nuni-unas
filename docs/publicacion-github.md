@@ -148,7 +148,7 @@ El repositorio incluye `.github/workflows/quality.yml`. En cada push a `main` o 
 
 - verifica la sintaxis de `script.js`;
 - ejecuta `node agent/audit.mjs`;
-- valida `index.html` con `html-validate`.
+- valida `index.html`, `terminos.html` y `privacidad.html` con `html-validate`.
 
 El workflow usa `permissions: contents: read` para que el token de GitHub Actions no tenga
 permisos de escritura.
@@ -191,7 +191,7 @@ Verificar en la URL publicada:
 
 1. Ir a **Releases** → **Draft a new release**.
 2. Tag: `v1.0.0`.
-3. Título: `Nuni Uñas — landing de conversión`.
+3. Título: `Nuni Uñas — landing para captar y ordenar consultas`.
 4. Notas sugeridas:
 
 ```markdown
@@ -199,25 +199,29 @@ Verificar en la URL publicada:
 
 - Landing mobile-first para Nuni Uñas.
 - Servicios, precios, garantía y galería.
-- Formulario de pre-reserva con validación y mensaje estructurado para WhatsApp.
+- Formulario de consulta con validación y mensaje estructurado para WhatsApp.
+- Términos y condiciones y política de privacidad enlazados.
 - Modal y lightbox accesibles con focus trap.
 - Imágenes AVIF/WebP/JPEG y pipeline de optimización.
 - CSP por hash, `noopener,noreferrer` y metadatos SEO.
-- Auditoría propia: 11 comprobaciones, 0 errores.
+- Auditoría propia: 12 comprobaciones, 0 errores.
 ```
 
 5. Publicar el release.
 
 ## 8. Checklist antes de cada push
 
+> **Regla de trabajo:** no hacer commit ni push hasta que la clienta revise y autorice la publicación.
+
 ```powershell
 node --check script.js
 node agent/audit.mjs
-npx --yes html-validate index.html
+npx --yes html-validate index.html terminos.html privacidad.html
 ```
 
 Además:
 
+- [ ] La clienta revisó y autorizó la publicación.
 - [ ] `git status` muestra solo los archivos esperados.
 - [ ] No hay `.env`, tokens, claves ni datos privados.
 - [ ] El autor del commit usa un email noreply, no el personal.
@@ -228,6 +232,8 @@ Además:
 - [ ] La landing se probó en local y, si aplica, en Pages.
 - [ ] El formulario inválido bloquea el envío.
 - [ ] El formulario válido abre WhatsApp en pestaña nueva.
+- [ ] Los enlaces a términos y privacidad funcionan desde el footer y el formulario.
+- [ ] Las páginas legales se ven bien en móvil y escritorio.
 - [ ] El lightbox cierra con `Escape` y devuelve el foco.
 
 ## 9. Opcional: usar GitHub CLI

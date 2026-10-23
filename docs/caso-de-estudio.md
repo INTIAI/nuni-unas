@@ -7,7 +7,7 @@
 | Cliente | Nuni Uñas |
 | Rubro | Manicura semipermanente, ojo de gato y belleza de manos |
 | Ubicación | Colón, Entre Ríos, Argentina |
-| Tipo de proyecto | Landing de conversión + handoff a WhatsApp |
+| Tipo de proyecto | Landing para captar y ordenar consultas + handoff a WhatsApp |
 | Meta de negocio | +20% de clientas en 6 meses |
 | Rol | Producto, UX/UI, frontend, accesibilidad, performance y documentación |
 | Stack | HTML5, CSS3, JavaScript vanilla, JSON-LD, AVIF/WebP/JPEG |
@@ -189,7 +189,8 @@ Se eligió una landing estática porque:
 ### Componentes
 
 - `index.html`: estructura semántica, metadatos, Open Graph, JSON-LD, CSP y contenido.
-- `styles.css`: sistema visual, responsive, hero, galería, modal y animaciones.
+- `terminos.html` y `privacidad.html`: condiciones del servicio y tratamiento de datos.
+- `styles.css`: sistema visual, responsive, hero, galería, modal, legales y animaciones.
 - `script.js`: menú, reveal, validación, WhatsApp, modal, lightbox y foco.
 - `fonts.css` + `assets/fonts/`: tipografías autohospedadas.
 - `imagenes/optimized/`: AVIF, WebP y JPG.
@@ -224,6 +225,16 @@ Se eligió una landing estática porque:
 - Respeto por `prefers-reduced-motion`.
 - Contraste de texto secundario corregido y nombres accesibles coherentes con el texto visible.
 - Lighthouse local: Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**.
+
+### Legal y privacidad
+
+- Términos y condiciones enlazados desde el footer y desde el formulario.
+- Política de privacidad enlazada desde el footer, el formulario y los términos.
+- El formulario no envía datos a un servidor propio: abre WhatsApp con un mensaje preparado.
+- Sin cookies propias, analítica ni píxeles publicitarios en esta versión.
+- Derechos de acceso, rectificación y supresión informados según la Ley 25.326.
+- Marca, textos y fotografías reservados a Nuni Uñas.
+- Si se agregan pagos, analítica, backend o calendario, los textos legales deben actualizarse.
 
 ## 9. Agenda y contactos: alcance real
 
