@@ -26,6 +26,9 @@ No hay proceso de compilación: se editan los archivos y se publican tal cual.
 ├── SECURITY.md                 # Política de seguridad y reporte
 ├── .gitignore                  # Archivos locales que no se publican
 ├── .gitattributes              # Fin de línea y archivos binarios
+├── .github/
+│   └── workflows/
+│       └── quality.yml         # Auditoría en cada push/PR
 ├── assets/
 │   └── fonts/
 │       ├── fraunces-normal.woff2
@@ -228,7 +231,9 @@ temporal (`npm install --no-save sharp`) y ejecutar el script; no hace falta agr
 - Errores de validación en español mediante `setCustomValidity`.
 - Respeto por `prefers-reduced-motion`.
 - Imágenes con texto alternativo descriptivo.
-- Contraste revisado en títulos y promesas.
+- Contraste de texto secundario corregido: `--muted` pasó de `#8c857c` a `#6f685f`.
+- Nombres accesibles de la marca y del botón flotante alineados con el texto visible.
+- Lighthouse local: Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**.
 
 Checklist manual:
 

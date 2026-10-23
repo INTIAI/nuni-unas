@@ -140,6 +140,8 @@ No hay frameworks, backend, base de datos, cookies propias ni proceso de build.
 - Modal y lightbox con focus trap, cierre con `Escape` y restauración de foco.
 - `node --check script.js` sin errores.
 - `npx --yes html-validate index.html` sin errores.
+- **Lighthouse local:** Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**, sin fallos.
+- Workflow de GitHub Actions con permisos de solo lectura para auditar en cada push/PR.
 - Consola del navegador sin errores ni avisos en la última revisión.
 - Sin secretos, sin PHP y sin datos personales almacenados.
 
@@ -174,6 +176,9 @@ npx --yes html-validate index.html
 ├── SECURITY.md
 ├── .gitignore
 ├── .gitattributes
+├── .github/
+│   └── workflows/
+│       └── quality.yml
 ├── assets/
 │   └── fonts/
 ├── imagenes/

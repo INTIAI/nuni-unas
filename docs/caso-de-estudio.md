@@ -222,6 +222,8 @@ Se eligió una landing estática porque:
 - Mensajes de error asociados a campos.
 - `role="status"` para confirmación.
 - Respeto por `prefers-reduced-motion`.
+- Contraste de texto secundario corregido y nombres accesibles coherentes con el texto visible.
+- Lighthouse local: Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**.
 
 ## 9. Agenda y contactos: alcance real
 

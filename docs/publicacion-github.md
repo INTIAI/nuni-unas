@@ -142,6 +142,17 @@ En **Settings → Code security and analysis**:
 - Activar **Dependabot alerts** (aunque hoy no hay dependencias de runtime).
 - Revisar que `SECURITY.md` aparezca en la pestaña **Security**.
 
+### Integración continua
+
+El repositorio incluye `.github/workflows/quality.yml`. En cada push a `main` o pull request:
+
+- verifica la sintaxis de `script.js`;
+- ejecuta `node agent/audit.mjs`;
+- valida `index.html` con `html-validate`.
+
+El workflow usa `permissions: contents: read` para que el token de GitHub Actions no tenga
+permisos de escritura.
+
 ## 5. Configurar la imagen social
 
 1. Ir a **Settings** → **General**.
