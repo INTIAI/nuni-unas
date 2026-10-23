@@ -20,12 +20,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          # html-validate 11.17 requiere ^22.22.0 || >=24.8.0
+          node-version: 24
 
       - name: Sintaxis JavaScript
         run: node --check script.js
