@@ -9,10 +9,14 @@
 /docs/* / 302
 /.gitignore / 302
 /.gitattributes / 302
+/.git / 302
+/.git/* / 302
 /.github / 302
 /.github/* / 302
 /.wrangler / 302
 /.wrangler/* / 302
-/.env / 302
-/.dev.vars / 302
-/wrangler.toml / 302
+/.env* / 302
+/.dev.vars* / 302
+/wrangler.* / 302
+/_headers / 302
+/_redirects / 302
