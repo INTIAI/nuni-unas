@@ -1,0 +1,18 @@
+# El sitio público solo debe servir la landing, las páginas legales y los assets.
+# La documentación interna queda disponible únicamente en el repositorio.
+
+/README.md / 302
+/SECURITY.md / 302
+/agent / 302
+/agent/* / 302
+/docs / 302
+/docs/* / 302
+/.gitignore / 302
+/.gitattributes / 302
+/.github / 302
+/.github/* / 302
+/.wrangler / 302
+/.wrangler/* / 302
+/.env / 302
+/.dev.vars / 302
+/wrangler.toml / 302
