@@ -3,6 +3,8 @@
    WhatsApp: +54 9 3447 412855
    ========================================= */
 
+document.documentElement.classList.add("reveal-ready");
+
 const STUDIO_WHATSAPP = "5493447412855";
 const waLink = (text) =>
   `https://wa.me/${STUDIO_WHATSAPP}?text=${encodeURIComponent(text)}`;
@@ -35,7 +37,10 @@ const mobileNav = $("#mobileNav");
 
 const closeMenu = () => {
   document.body.classList.remove("menu-open");
-  if (mobileNav) mobileNav.classList.remove("open");
+  if (mobileNav) {
+    mobileNav.classList.remove("open");
+    mobileNav.setAttribute("aria-hidden", "true");
+  }
   if (menuToggle) {
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Abrir menú");
@@ -43,9 +48,12 @@ const closeMenu = () => {
 };
 
 if (menuToggle && mobileNav) {
+  mobileNav.setAttribute("aria-hidden", "true");
+
   menuToggle.addEventListener("click", () => {
     const open = !mobileNav.classList.contains("open");
     mobileNav.classList.toggle("open", open);
+    mobileNav.setAttribute("aria-hidden", String(!open));
     document.body.classList.toggle("menu-open", open);
     menuToggle.setAttribute("aria-expanded", String(open));
     menuToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
@@ -54,11 +62,21 @@ if (menuToggle && mobileNav) {
   $$("a, button", mobileNav).forEach((item) => {
     item.addEventListener("click", closeMenu);
   });
+
+  document.addEventListener("click", (event) => {
+    if (!mobileNav.classList.contains("open")) return;
+    if (mobileNav.contains(event.target) || menuToggle.contains(event.target)) return;
+    closeMenu();
+  });
 }
 
-window.addEventListener("resize", () => {
-  if (window.innerWidth > 900) closeMenu();
-});
+window.addEventListener(
+  "resize",
+  () => {
+    if (window.innerWidth > 900) closeMenu();
+  },
+  { passive: true }
+);
 
 /* ---------- revelado al hacer scroll ---------- */
 
@@ -253,7 +271,7 @@ const formatDate = (value) => {
 
 const isWithinUrgencyWindow = (value) => {
   if (!value) return false;
-  const chosen = new Date(`${value}T23:59:59`);
+  const chosen = new Date(`${value}T23:59:59.999`);
   const diff = chosen.getTime() - Date.now();
   return diff > 0 && diff <= 48 * 60 * 60 * 1000;
 };
@@ -327,9 +345,13 @@ if (bookingForm) {
     if (win) win.opener = null;
 
     if (successText) {
-      successText.textContent = name
-        ? `¡Listo, ${name}! Abrí WhatsApp con tu mensaje armado.`
-        : "¡Listo! Abrí WhatsApp con tu mensaje armado.";
+      successText.textContent = win
+        ? name
+          ? `¡Listo, ${name}! Abrí WhatsApp con tu mensaje armado.`
+          : "¡Listo! Abrí WhatsApp con tu mensaje armado."
+        : name
+          ? `¡Listo, ${name}! Tu navegador bloqueó la pestaña. Usá el botón de abajo para confirmar por WhatsApp.`
+          : "Tu navegador bloqueó la pestaña. Usá el botón de abajo para confirmar por WhatsApp.";
     }
 
     if (successBox) {

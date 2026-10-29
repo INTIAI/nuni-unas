@@ -26,6 +26,9 @@ No hay proceso de compilación: se editan los archivos y se publican tal cual.
 ├── fonts.css                   # @font-face autohospedado
 ├── README.md                   # Presentación del proyecto y caso de estudio
 ├── SECURITY.md                 # Política de seguridad y reporte
+├── _headers                    # Cabeceras de seguridad para Cloudflare Pages
+├── robots.txt                  # Indexación y referencia al sitemap
+├── sitemap.xml                 # URLs del sitio para buscadores
 ├── .gitignore                  # Archivos locales que no se publican
 ├── .gitattributes              # Fin de línea y archivos binarios
 ├── .github/
@@ -130,21 +133,33 @@ Al probar cambios que puedan estar cacheados, abrir con un parámetro de versió
 
 - Sitio 100 % estático: no hay endpoints, sesiones, cookies propias ni almacenamiento de datos.
 - El formulario no persiste información; solo prepara el mensaje y lo entrega a WhatsApp.
-- La CSP está declarada por `<meta>` en `index.html`:
+- La CSP está declarada por `<meta>` en `index.html` y también en `_headers` para Cloudflare Pages:
 
   ```text
   default-src 'self'; base-uri 'self'; object-src 'none';
   img-src 'self' data:; font-src 'self'; style-src 'self';
-  script-src 'self' 'sha256-WZRJfWvsnNCPcxzZwvyhovnZGqhZaC+8gPGPRbx6wTk='
-  'sha256-Lmz4b8uSySDWQgwEkXhYMD8DfERudFelFd9VQ1G1ZQs=';
-  form-action 'self'
+  script-src 'self' 'sha256-ShpFr4uImbDYbECieSurzFQyT+eqCnVjNZGl/XBUS48='
+  'sha256-fYL45ZBXvMZsZ4zIOp5/NL5PKLjE8zZ616wAV/b3R8g=';
+  form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   ```
 
 - Los dos hashes corresponden a:
-  - el script inline que agrega `js` al documento;
+  - el script inline que agrega `js` y el fallback de revelado a los 2,5 s;
   - el bloque JSON-LD de Schema.org.
+- `_headers` agrega HSTS, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`,
+  `Referrer-Policy`, `Permissions-Policy`, `frame-ancestors 'none'` y
+  `upgrade-insecure-requests`.
+- `frame-ancestors` y `upgrade-insecure-requests` solo se aplican por cabecera HTTP; no
+  desde el `meta` CSP. El `meta` queda como respaldo para GitHub Pages y para el preview local.
+- `upgrade-insecure-requests` no va en el `meta` para no romper `http://127.0.0.1:8000`.
 - Se usa `referrer` con `strict-origin-when-cross-origin`.
 - `window.open` se llama con `noopener,noreferrer` y además se limpia `win.opener`.
+- Si el navegador bloquea la pestaña de WhatsApp, el mensaje de éxito invita a usar el botón
+  de respaldo en lugar de mostrar una confirmación falsa.
+- El script principal agrega `reveal-ready`; si no llega a cargar, el script inline revela
+  el contenido a los 2,5 s para que la página no quede invisible.
+- El menú móvil actualiza `aria-hidden`, cierra al tocar fuera y usa un listener `passive`.
+- `.wrangler/`, `.dev.vars*`, claves y certificados están ignorados por Git.
 - No hay secretos, tokens ni claves en el repositorio.
 
 ### Reglas al modificar scripts inline
@@ -314,6 +329,11 @@ Además:
 - [ ] Las páginas legales se ven bien en móvil y escritorio.
 - [ ] No hay referencias a PNG originales en HTML/CSS.
 - [ ] No se agregaron secretos, PHP ni dependencias innecesarias.
+- [ ] `_headers` está presente y los hashes coinciden con `index.html`.
+- [ ] `canonical`, `og:url`, `og:image` y `twitter:image` apuntan al dominio final.
+- [ ] `robots.txt` y `sitemap.xml` usan el dominio final.
+- [ ] `.wrangler/` y `.dev.vars*` no aparecen en `git status`.
+- [ ] La URL pública responde 200.
 - [ ] Se probó en móvil y escritorio.
 - [ ] No se hace commit ni push sin autorización de la clienta.
 
@@ -329,3 +349,16 @@ Además:
 - Lighthouse local: Accesibilidad **1.00**, Best Practices **1.00**, SEO **1.00**.
 - Consola del navegador: sin errores ni avisos después de quitar el preload del hero.
 - Formulario inválido/válido y lightbox probados en navegador.
+- Cabeceras de producción en `_headers`: HSTS, `nosniff`, `X-Frame-Options`, `frame-ancestors`,
+  `Permissions-Policy` y `upgrade-insecure-requests`.
+- CSP sincronizada entre el `meta` y `_headers`; hashes verificados.
+- Canonical, Open Graph, Twitter Cards y JSON-LD ampliado con `ReserveAction`.
+- `robots.txt` y `sitemap.xml` creados para el dominio final.
+- Fallback `reveal-ready` si `script.js` no carga.
+- Menú móvil con `aria-hidden`, cierre al tocar fuera y listener `passive`.
+- Fallback visible si el navegador bloquea la pestaña de WhatsApp.
+- `.wrangler/` y `.dev.vars*` ignorados por Git.
+- Preview local verificado en `http://127.0.0.1:8000/`: HTTP 200 y consola limpia.
+- `https://nuni-unas-landing.pages.dev/` responde 200; la URL gratuita con marca elegida es
+  `https://nuniunas.pages.dev/` (crear proyecto de Pages llamado `nuniunas`). `nuniunas.com`
+  queda como dominio propio futuro.

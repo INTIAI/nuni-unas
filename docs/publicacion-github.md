@@ -20,7 +20,7 @@ Datos sugeridos del repositorio:
 | Nombre | `nuni-unas-landing` |
 | Visibilidad | Público |
 | Descripción | Landing de conversión para Nuni Uñas: reservas por WhatsApp, UX mobile-first, accesibilidad, performance y caso de estudio de neuroventas. |
-| Sitio | La URL de GitHub Pages o el dominio final, cuando esté publicado |
+| Sitio | `https://nuniunas.pages.dev/` (URL gratuita con marca) |
 | Topics | `html`, `css`, `javascript`, `landing-page`, `conversion-optimization`, `whatsapp`, `accessibility`, `performance`, `neurosales`, `small-business`, `argentina`, `frontend`, `portfolio`, `ux` |
 
 ## 1. Crear el repositorio en GitHub
@@ -42,7 +42,7 @@ GitHub mostrará una pantalla con comandos. No hace falta copiarlos todavía; lo
 Abrir PowerShell en la carpeta del proyecto:
 
 ```powershell
-cd "D:\0- Usuario\Desktop\Trabajo INTIAI(test)\web uñas test"
+cd "D:\0- Usuario\Desktop\IntiAI_Projects\web uñas test"
 ```
 
 Si es la primera vez que se usa Git en esta computadora, configurar identidad:
@@ -78,7 +78,9 @@ Revisar qué se va a subir:
 git status
 ```
 
-Comprobar que no aparezcan `.env`, `node_modules`, archivos temporales ni secretos.
+Comprobar que no aparezcan `.env`, `node_modules`, `.wrangler/`, `.dev.vars*`, archivos temporales ni secretos.
+
+> El proyecto ya incluye `_headers`, `robots.txt` y `sitemap.xml`. Son archivos de producción: no los excluyas.
 
 Agregar y confirmar:
 
@@ -102,6 +104,9 @@ Conectar el remoto y subir:
 git remote add origin https://github.com/TU-USUARIO/nuni-unas-landing.git
 git push -u origin main
 ```
+
+> En este proyecto el remoto ya apunta a `https://github.com/INTIAI/nuni-unas-landing.git`.
+> Si el repositorio ya existe, no hace falta crearlo de nuevo: verificá con `git remote -v`.
 
 Si el remoto ya existía:
 
@@ -204,6 +209,9 @@ Verificar en la URL publicada:
 - Modal y lightbox accesibles con focus trap.
 - Imágenes AVIF/WebP/JPEG y pipeline de optimización.
 - CSP por hash, `noopener,noreferrer` y metadatos SEO.
+- Cabeceras de seguridad en `_headers`: HSTS, `X-Frame-Options`, `frame-ancestors` y `Permissions-Policy`.
+- Canonical, Open Graph, Twitter Cards, `robots.txt` y `sitemap.xml`.
+- Fallback de contenido si `script.js` no carga.
 - Auditoría propia: 12 comprobaciones, 0 errores.
 ```
 
@@ -224,6 +232,11 @@ Además:
 - [ ] La clienta revisó y autorizó la publicación.
 - [ ] `git status` muestra solo los archivos esperados.
 - [ ] No hay `.env`, tokens, claves ni datos privados.
+- [ ] `.wrangler/` y `.dev.vars*` no aparecen en `git status`.
+- [ ] `_headers`, `robots.txt` y `sitemap.xml` están incluidos.
+- [ ] Los hashes de la CSP coinciden entre `index.html` y `_headers`.
+- [ ] `canonical`, `og:url`, `og:image` y `twitter:image` usan el dominio final.
+- [ ] La URL pública responde 200.
 - [ ] El autor del commit usa un email noreply, no el personal.
 - [ ] `SECURITY.md` está presente y actualizado.
 - [ ] No se subieron capturas con información sensible.
@@ -262,3 +275,16 @@ No es obligatorio. La ruta web + Git es suficiente.
 El repositorio muestra código y documentación con fines de portfolio. La marca, los textos,
 las fotografías y los datos de contacto pertenecen a Nuni Uñas. No reutilizar la identidad
 visual ni las fotos sin autorización.
+
+## 12. Dominio personalizado
+
+La URL gratuita con marca elegida es `https://nuniunas.pages.dev/`. Se obtiene creando un proyecto de Cloudflare Pages llamado `nuniunas` conectado al mismo repositorio. Para pasar a un dominio propio de pago:
+
+1. Registrar el dominio (por ejemplo `nuniunas.com` o `nuniunas.com.ar`).
+2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+3. Cloudflare crea el DNS y el certificado SSL automáticamente.
+4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml`.
+5. Redirigir `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect**.
+6. Verificar en Search Console y volver a compartir el enlace.
+
+El detalle completo está en el README y en [`SECURITY.md`](../SECURITY.md).

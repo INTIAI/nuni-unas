@@ -11,7 +11,7 @@
 | Meta de negocio | +20% de clientas en 6 meses |
 | Rol | Producto, UX/UI, frontend, accesibilidad, performance y documentación |
 | Stack | HTML5, CSS3, JavaScript vanilla, JSON-LD, AVIF/WebP/JPEG |
-| Estado | MVP funcional y auditado; listo para publicar |
+| Estado | MVP funcional, auditado y publicado en Cloudflare Pages; URL gratuita `nuniunas.pages.dev` |
 
 ## 1. Contexto
 
@@ -194,16 +194,22 @@ Se eligió una landing estática porque:
 - `script.js`: menú, reveal, validación, WhatsApp, modal, lightbox y foco.
 - `fonts.css` + `assets/fonts/`: tipografías autohospedadas.
 - `imagenes/optimized/`: AVIF, WebP y JPG.
+- `_headers`: HSTS, `X-Frame-Options`, `frame-ancestors`, `Permissions-Policy` y CSP de producción.
+- `robots.txt` y `sitemap.xml`: indexación y URLs canónicas.
 - `agent/audit.mjs`: auditoría sin dependencias.
-- `docs/`: documentación del caso y guía de publicación.
+- `docs/`: documentación del caso, ficha para INTI AI y guía de publicación.
 
 ### Seguridad
 
-- CSP por hash para los dos scripts inline.
+- CSP por hash para los dos scripts inline, sincronizada entre `index.html` y `_headers`.
+- `_headers` con HSTS, `X-Frame-Options: DENY`, `frame-ancestors 'none'`, `Permissions-Policy`,
+  `X-Content-Type-Options: nosniff` y `upgrade-insecure-requests`.
 - `referrer` con `strict-origin-when-cross-origin`.
 - `noopener,noreferrer` en enlaces externos y `window.open`.
+- Sin `innerHTML`, `eval` ni `new Function`; los datos del formulario se codifican con `encodeURIComponent`.
 - Sin secretos, sin cookies propias, sin base de datos.
 - Sin PHP ni endpoints.
+- `.wrangler/`, `.dev.vars*`, claves y certificados fuera del repositorio público.
 
 ### Performance
 
@@ -341,6 +347,30 @@ Sin esa comparación, el +20% es solo una intención.
 - Activar Google Business Profile y SEO local.
 - Evaluar calendario, señas y recordatorios según demanda.
 - Iterar copy y CTA con datos, no con intuición.
+
+---
+
+## 15. Ficha para INTI AI — caso real de cliente
+
+**Cliente:** Nuni Uñas · manicura semipermanente en Colón, Entre Ríos.
+
+**Desafío:** ordenar las consultas que llegaban por WhatsApp y reducir el ida y vuelta antes de confirmar un turno.
+
+**Solución:** landing mobile-first con servicios, precios, garantía, galería, formulario de pre-reserva y handoff a WhatsApp con mensaje armado.
+
+**Stack:** HTML5, CSS3, JavaScript vanilla, JSON-LD, AVIF/WebP/JPEG, Cloudflare Pages.
+
+**Seguridad:** CSP por hash, HSTS, `X-Frame-Options`, `frame-ancestors`, `Permissions-Policy`, `nosniff`, sin backend ni cookies propias.
+
+**Accesibilidad:** navegación por teclado, focus trap, skip link, contraste y `prefers-reduced-motion`.
+
+**Performance:** sin librerías de terceros, fuentes autohospedadas, 21 variantes de imagen y ~184 KB en AVIF.
+
+**Estado:** publicado en `https://nuniunas.pages.dev/` (URL gratuita con marca); dominio propio `nuniunas.com` como mejora futura.
+
+**Idea fuerza:** una landing estática bien ejecutada puede ordenar el primer contacto y preparar la medición del +20% sin agregar infraestructura costosa.
+
+> No incluir métricas de resultado hasta contar con línea base. El +20% es una hipótesis medible, no una promesa.
 
 ---
 

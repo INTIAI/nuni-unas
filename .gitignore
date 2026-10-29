@@ -20,6 +20,17 @@ coverage/
 .env.*
 !.env.example
 
+# Cloudflare / Wrangler (caché local, no debe publicarse)
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Claves y certificados
+*.pem
+*.key
+*.p12
+*.pfx
+
 # Logs y temporales
 *.log
 *.tmp

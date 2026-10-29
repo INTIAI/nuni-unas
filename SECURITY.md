@@ -79,16 +79,42 @@ Como mínimo:
 - definir retención y borrado de datos;
 - publicar una política de privacidad.
 
-## Cabeceras recomendadas en producción
+## Cabeceras de producción (Cloudflare Pages)
 
-Además de la CSP del documento:
+El archivo [`_headers`](_headers) aplica estas cabeceras en Cloudflare Pages:
 
 ```text
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: camera=(), microphone=(), geolocation=()
+Content-Security-Policy: ...; frame-ancestors 'none'; upgrade-insecure-requests
 ```
+
+`frame-ancestors` y `upgrade-insecure-requests` no se aplican desde el `meta` CSP: van en la cabecera HTTP. El `meta` CSP queda como respaldo para GitHub Pages y para el preview local con `http://127.0.0.1:8000`.
+
+### Sincronización de hashes CSP
+
+La CSP autoriza dos scripts inline de `index.html` por hash SHA-256. Si cambiás el script de la clase `js` o el bloque JSON-LD:
+
+1. Calculá el hash nuevo del contenido exacto entre `<script>` y `</script>`.
+2. Actualizalo en el `meta http-equiv="Content-Security-Policy"` de `index.html`.
+3. Actualizalo también en `_headers`.
+4. Verificá en la consola del navegador que no aparezcan errores de CSP.
+
+## Migración de dominio
+
+Mientras no haya un dominio propio registrado, la URL gratuita con marca es `https://nuniunas.pages.dev/`. Se obtiene creando un proyecto de Cloudflare Pages llamado `nuniunas` y conectándolo al mismo repositorio.
+
+Para pasar a un dominio propio de pago:
+
+1. Registrar el dominio (por ejemplo `nuniunas.com` o `nuniunas.com.ar`). Los dominios no admiten comillas, espacios ni la letra `ñ` en su forma literal; si se usa `ñ`, el sistema la convierte a punycode (`xn--...`). Para SEO y para compartir por WhatsApp conviene la versión sin `ñ`.
+2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+3. Cloudflare crea el registro DNS y emite el certificado SSL automáticamente.
+4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml` con el dominio final.
+5. Redirigir el dominio `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect** en Cloudflare (Cloudflare Pages sirve ambos dominios por defecto).
+6. Verificar en Search Console y volver a compartir el enlace para actualizar la vista previa de WhatsApp.
 
 ## Versiones
 

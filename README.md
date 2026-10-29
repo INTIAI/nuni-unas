@@ -124,7 +124,7 @@ Plan de 6 meses:
 | SEO local | JSON-LD `NailSalon` + Open Graph | Contexto para buscadores y redes |
 | Conversión | WhatsApp deep links (`wa.me`) | El canal que la clienta ya usa |
 | Imágenes | AVIF, WebP y JPEG con `<picture>` + Sharp | Calidad visual con menor peso |
-| Seguridad | CSP por hash, `referrer`, `noopener,noreferrer` | Superficie de ataque mínima |
+| Seguridad | CSP por hash, `_headers` con HSTS/frame-ancestors, `referrer`, `noopener,noreferrer` | Superficie de ataque mínima |
 | Calidad | `agent/audit.mjs` + `html-validate` | Verificación reproducible antes de publicar |
 | Preview | Python `http.server` | Servidor local sin instalar nada más |
 | Versionado | Git + GitHub | Historial y publicación del caso de estudio |
@@ -148,6 +148,9 @@ No hay frameworks, backend, base de datos, cookies propias ni proceso de build.
 ### Seguridad del repositorio público
 
 - La CSP por hash bloquea scripts inline no autorizados.
+- `_headers` aplica HSTS, `X-Frame-Options: DENY`, `frame-ancestors 'none'`, `Permissions-Policy` y `nosniff` en Cloudflare Pages.
+- Canonical, Open Graph y Twitter Cards con URL absoluta para una vista previa correcta en WhatsApp y redes.
+- `robots.txt` y `sitemap.xml` listos para el dominio final.
 - No se usa `innerHTML`, `eval` ni `new Function`.
 - Los datos del formulario se codifican con `encodeURIComponent` antes de entrar en la URL de WhatsApp.
 - Los enlaces externos usan `noopener,noreferrer`.
@@ -176,6 +179,9 @@ npx --yes html-validate index.html terminos.html privacidad.html
 ├── fonts.css
 ├── README.md
 ├── SECURITY.md
+├── _headers
+├── robots.txt
+├── sitemap.xml
 ├── .gitignore
 ├── .gitattributes
 ├── .github/
@@ -234,11 +240,24 @@ Después, en GitHub:
 3. Activar **GitHub Pages** desde `main` / root si se quiere una demo pública.
 4. Crear el release `v1.0.0`.
 
+## 9.1 Dominio personalizado (Cloudflare Pages)
+
+La URL gratuita con marca elegida es `https://nuniunas.pages.dev/`. Se obtiene creando un proyecto de Cloudflare Pages llamado `nuniunas` conectado a este repositorio (el proyecto actual `nuni-unas-landing.pages.dev` sigue funcionando como respaldo). Para usar un dominio propio de pago:
+
+1. Registrar el dominio. Los dominios no admiten comillas, espacios ni `ñ` literal; para SEO y WhatsApp conviene `nuniunas.com` o `nuniunas.com.ar`.
+2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+3. Cloudflare crea el DNS y el certificado SSL automáticamente.
+4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml` con el dominio final.
+5. Redirigir `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect**.
+6. Verificar en Search Console y volver a compartir el enlace.
+
+El archivo [`_headers`](_headers) aplica HSTS, `nosniff`, `frame-ancestors 'none'`, `Permissions-Policy` y la CSP de producción.
+
 ## 10. Roadmap
 
 ### Ahora
 
-- Landing lista para publicar.
+- Landing publicada en Cloudflare Pages; dominio propio en configuración.
 - Flujo de captación y ordenamiento de consultas por WhatsApp.
 - Páginas de términos y privacidad enlazadas desde el footer y el formulario.
 - Imágenes optimizadas y auditoría reproducible.
