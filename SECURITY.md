@@ -110,7 +110,7 @@ Mientras no haya un dominio propio registrado, la URL gratuita con marca es `htt
 Para pasar a un dominio propio de pago:
 
 1. Registrar el dominio (por ejemplo `nuniunas.com` o `nuniunas.com.ar`). Los dominios no admiten comillas, espacios ni la letra `ñ` en su forma literal; si se usa `ñ`, el sistema la convierte a punycode (`xn--...`). Para SEO y para compartir por WhatsApp conviene la versión sin `ñ`.
-2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+2. En Cloudflare: **Workers & Pages → nuniunas → Custom domains → Set up a custom domain**.
 3. Cloudflare crea el registro DNS y emite el certificado SSL automáticamente.
 4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml` con el dominio final.
 5. Redirigir el dominio `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect** en Cloudflare (Cloudflare Pages sirve ambos dominios por defecto).

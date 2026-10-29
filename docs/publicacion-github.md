@@ -17,7 +17,7 @@ Datos sugeridos del repositorio:
 
 | Campo | Valor sugerido |
 |---|---|
-| Nombre | `nuni-unas-landing` |
+| Nombre | `nuni-unas` |
 | Visibilidad | Público |
 | Descripción | Landing de conversión para Nuni Uñas: reservas por WhatsApp, UX mobile-first, accesibilidad, performance y caso de estudio de neuroventas. |
 | Sitio | `https://nuniunas.pages.dev/` (URL gratuita con marca) |
@@ -28,7 +28,7 @@ Datos sugeridos del repositorio:
 1. Entrar a <https://github.com> e iniciar sesión.
 2. Tocar el botón **+** arriba a la derecha → **New repository**.
 3. Completar:
-   - **Repository name:** `nuni-unas-landing`
+   - **Repository name:** `nuni-unas`
    - **Description:** la descripción sugerida de la tabla.
    - **Visibility:** **Public**.
    - **Initialize this repository with:** dejar **sin** README, sin `.gitignore` y sin licencia.
@@ -95,23 +95,23 @@ git commit -m "feat: landing de conversión para Nuni Uñas"
 Copiar la URL del repositorio desde GitHub. Debe verse así:
 
 ```text
-https://github.com/TU-USUARIO/nuni-unas-landing.git
+https://github.com/TU-USUARIO/nuni-unas.git
 ```
 
 Conectar el remoto y subir:
 
 ```powershell
-git remote add origin https://github.com/TU-USUARIO/nuni-unas-landing.git
+git remote add origin https://github.com/TU-USUARIO/nuni-unas.git
 git push -u origin main
 ```
 
-> En este proyecto el remoto ya apunta a `https://github.com/INTIAI/nuni-unas-landing.git`.
+> En este proyecto el remoto ya apunta a `https://github.com/INTIAI/nuni-unas.git`.
 > Si el repositorio ya existe, no hace falta crearlo de nuevo: verificá con `git remote -v`.
 
 Si el remoto ya existía:
 
 ```powershell
-git remote set-url origin https://github.com/TU-USUARIO/nuni-unas-landing.git
+git remote set-url origin https://github.com/TU-USUARIO/nuni-unas.git
 git push -u origin main
 ```
 
@@ -179,7 +179,7 @@ Esa imagen es la que se verá cuando se comparta el repositorio en LinkedIn, X, 
 La URL quedará con este formato:
 
 ```text
-https://TU-USUARIO.github.io/nuni-unas-landing/
+https://TU-USUARIO.github.io/nuni-unas/
 ```
 
 La landing usa rutas relativas (`imagenes/...`, `assets/...`), así que funciona en Pages sin cambios.
@@ -256,7 +256,7 @@ Si más adelante se instala `gh`:
 ```powershell
 winget install --id GitHub.cli
 gh auth login
-gh repo create nuni-unas-landing --public --source=. --remote=origin --push
+gh repo create nuni-unas --public --source=. --remote=origin --push
 ```
 
 No es obligatorio. La ruta web + Git es suficiente.
@@ -281,7 +281,7 @@ visual ni las fotos sin autorización.
 La URL gratuita con marca elegida es `https://nuniunas.pages.dev/`. Se obtiene creando un proyecto de Cloudflare Pages llamado `nuniunas` conectado al mismo repositorio. Para pasar a un dominio propio de pago:
 
 1. Registrar el dominio (por ejemplo `nuniunas.com` o `nuniunas.com.ar`).
-2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+2. En Cloudflare: **Workers & Pages → nuniunas → Custom domains → Set up a custom domain**.
 3. Cloudflare crea el DNS y el certificado SSL automáticamente.
 4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml`.
 5. Redirigir `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect**.

@@ -229,7 +229,7 @@ git init
 git branch -M main
 git add .
 git commit -m "feat: landing para captar y ordenar consultas de Nuni Uñas"
-git remote add origin https://github.com/TU-USUARIO/nuni-unas-landing.git
+git remote add origin https://github.com/INTIAI/nuni-unas.git
 git push -u origin main
 ```
 
@@ -245,7 +245,7 @@ Después, en GitHub:
 La URL gratuita con marca elegida es `https://nuniunas.pages.dev/`. Se obtiene creando un proyecto de Cloudflare Pages llamado `nuniunas` conectado a este repositorio (el proyecto actual `nuni-unas-landing.pages.dev` sigue funcionando como respaldo). Para usar un dominio propio de pago:
 
 1. Registrar el dominio. Los dominios no admiten comillas, espacios ni `ñ` literal; para SEO y WhatsApp conviene `nuniunas.com` o `nuniunas.com.ar`.
-2. En Cloudflare: **Workers & Pages → nuni-unas-landing → Custom domains → Set up a custom domain**.
+2. En Cloudflare: **Workers & Pages → nuniunas → Custom domains → Set up a custom domain**.
 3. Cloudflare crea el DNS y el certificado SSL automáticamente.
 4. Actualizar `canonical`, `og:url`, `og:image`, `twitter:image`, `robots.txt` y `sitemap.xml` con el dominio final.
 5. Redirigir `pages.dev` al dominio propio con una **Redirect Rule** o **Bulk Redirect**.
