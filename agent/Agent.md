@@ -139,7 +139,7 @@ Al probar cambios que puedan estar cacheados, abrir con un parámetro de versió
   default-src 'self'; base-uri 'self'; object-src 'none';
   img-src 'self' data:; font-src 'self'; style-src 'self';
   script-src 'self' 'sha256-ShpFr4uImbDYbECieSurzFQyT+eqCnVjNZGl/XBUS48='
-  'sha256-fYL45ZBXvMZsZ4zIOp5/NL5PKLjE8zZ616wAV/b3R8g=';
+  'sha256-AJW8OvNoBIfO+CHhiufjJ6/5u7IO6fqGpVut6o39/BM=';
   form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   ```
 
